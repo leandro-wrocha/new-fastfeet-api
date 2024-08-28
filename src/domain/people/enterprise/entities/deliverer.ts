@@ -2,8 +2,7 @@ import { AggregateRoot } from 'src/core/entities/aggregate-root';
 import { UniqueEntityId } from 'src/core/entities/unique-entity-id';
 import { Role } from '../enums/role';
 
-export interface AdminProps {
-  id?: UniqueEntityId;
+export interface DelivererProps {
   name: string;
   cpf: string;
   password: string;
@@ -11,8 +10,8 @@ export interface AdminProps {
   createdAt?: Date;
 }
 
-export class Admin extends AggregateRoot<AdminProps> {
-  constructor(props: AdminProps, id?: UniqueEntityId) {
+export class Deliverer extends AggregateRoot<DelivererProps> {
+  constructor(props: DelivererProps, id?: UniqueEntityId) {
     super(props, id);
   }
 
@@ -44,17 +43,13 @@ export class Admin extends AggregateRoot<AdminProps> {
     this.props.password = value;
   }
 
-  isAdmin() {
-    return this.props.role === Role.ADMIN;
+  isDeliverer() {
+    return this.props.role === Role.DELIVERER;
   }
 
-  static create(props: AdminProps, id?: UniqueEntityId) {
-    return new Admin(
-      {
-        ...props,
-        role: Role.ADMIN,
-        createdAt: new Date(),
-      },
+  static create(props: DelivererProps, id?: UniqueEntityId) {
+    return new Deliverer(
+      { ...props, role: Role.DELIVERER, createdAt: new Date() },
       id,
     );
   }

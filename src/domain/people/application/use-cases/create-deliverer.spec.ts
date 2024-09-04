@@ -23,16 +23,16 @@ describe('Create Deliverer Use Case', () => {
 
     await inMemoryAdminsRepository.create(admin);
 
+    const cpf = faker.string.numeric({ length: 11 });
+
     const result = await sut.execute({
       adminId: admin.id.toString(),
       name: faker.person.fullName(),
-      cpf: faker.string.numeric({ length: 11 }),
+      cpf,
       password: faker.internet.password(),
     });
 
     expect(result.isRight()).toBe(true);
-    expect(inMemoryDeliverersRepository.items[0].cpf).toEqual(
-      result.value?.deliverer.cpf,
-    );
+    expect(inMemoryDeliverersRepository.items[0].cpf).toEqual(cpf);
   });
 });

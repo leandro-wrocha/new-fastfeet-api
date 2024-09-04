@@ -3,6 +3,7 @@ import { InMemoryDeliverersRepository } from 'test/repositories/in-memory-delive
 import { FetchDeliverersUseCase } from './fetch-deliverers';
 import { makeAdmin } from 'test/factories/make-admin';
 import { makeDeliverer } from 'test/factories/make-deliverer';
+import { Deliverer } from '../../enterprise/entities/deliverer';
 
 let inMemoryAdminsRepository: InMemoryAdminsRepository;
 let inMemoryDeliverersRepository: InMemoryDeliverersRepository;
@@ -35,6 +36,8 @@ describe('Fetch Deliverers Use Case', () => {
     });
 
     expect(result.isRight()).toBe(true);
-    expect(result.value?.deliverers.length).toEqual(2);
+    expect(
+      (result.value as { deliverers: Deliverer[] }).deliverers.length,
+    ).toEqual(2);
   });
 });

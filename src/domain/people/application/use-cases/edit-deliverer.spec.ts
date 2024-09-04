@@ -36,7 +36,9 @@ describe('Edit Deliverer Use Case', () => {
     });
 
     expect(result.isRight()).toBe(true);
-    expect(result.value?.deliverer.name).toEqual('Leandro Ferreira');
+    expect(inMemoryDeliverersRepository.items[0].name).toEqual(
+      'Leandro Ferreira',
+    );
     expect(inMemoryDeliverersRepository.items[0].cpf).toEqual(deliverer.cpf);
   });
 });

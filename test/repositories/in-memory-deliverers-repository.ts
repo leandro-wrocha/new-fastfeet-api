@@ -25,7 +25,23 @@ export class InMemoryDeliverersRepository implements DeliverersRepository {
     return deliverer ?? null;
   }
 
-  async save(deliverer: Deliverer): Promise<void> {
+  async create(deliverer: Deliverer): Promise<void> {
     this.items.push(deliverer);
+  }
+
+  async save(deliverer: Deliverer): Promise<void> {
+    const delivererIndex = this.items.findIndex((item) =>
+      item.equals(deliverer),
+    );
+
+    this.items[delivererIndex] = deliverer;
+  }
+
+  async delete(deliverer: Deliverer): Promise<void> {
+    const delivererIndex = this.items.findIndex((item) =>
+      item.equals(deliverer),
+    );
+
+    this.items.splice(delivererIndex, 1);
   }
 }

@@ -8,7 +8,7 @@ import { hash } from 'bcrypt';
 import { AlreadyExistsError } from './errors/already-exists-error';
 
 interface CreateDelivererUseCaseRequest {
-  id: string;
+  adminId: string;
   name: string;
   cpf: string;
   password: string;
@@ -26,12 +26,12 @@ export class CreateDelivererUseCase {
   ) {}
 
   async execute({
-    id,
+    adminId,
     name,
     cpf,
     password,
   }: CreateDelivererUseCaseRequest): Promise<CreateDelivererUseCaseResponse> {
-    const admin = await this.adminsRepository.findAdminById(id);
+    const admin = await this.adminsRepository.findById(adminId);
 
     if (!admin) {
       return left(new ResourceNotFoundError());
@@ -53,7 +53,7 @@ export class CreateDelivererUseCase {
       password: await hash(password, 12),
     });
 
-    await this.deliverersRepository.save(deliverer);
+    await this.deliverersRepository.create(deliverer);
 
     return right({ deliverer });
   }

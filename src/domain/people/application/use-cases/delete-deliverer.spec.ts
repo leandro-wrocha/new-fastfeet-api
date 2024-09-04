@@ -1,38 +1,36 @@
-import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
-import { InMemoryDeliverersRepository } from 'test/repositories/in-memory-deliverers-repository';
-import { CreateDelivererUseCase } from './create-deliverer';
 import { makeAdmin } from 'test/factories/make-admin';
-import { faker } from '@faker-js/faker';
+import { makeDeliverer } from 'test/factories/make-deliverer';
+import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
+import { DeleteDelivererUseCase } from './delete-deliverer';
+import { InMemoryDeliverersRepository } from 'test/repositories/in-memory-deliverers-repository';
 
 let inMemoryAdminsRepository: InMemoryAdminsRepository;
 let inMemoryDeliverersRepository: InMemoryDeliverersRepository;
-let sut: CreateDelivererUseCase;
+let sut: DeleteDelivererUseCase;
 
-describe('Create Deliverer Use Case', () => {
-  beforeAll(() => {
+describe('Delete Deliverer Use Case', () => {
+  beforeEach(() => {
     inMemoryAdminsRepository = new InMemoryAdminsRepository();
     inMemoryDeliverersRepository = new InMemoryDeliverersRepository();
-    sut = new CreateDelivererUseCase(
-      inMemoryDeliverersRepository,
+    sut = new DeleteDelivererUseCase(
       inMemoryAdminsRepository,
+      inMemoryDeliverersRepository,
     );
   });
 
-  it('should be able a create deliverer', async () => {
+  it('should be able delete a deliverer', async () => {
     const admin = makeAdmin({});
+    const deliverer = makeDeliverer({});
 
     await inMemoryAdminsRepository.create(admin);
+    await inMemoryDeliverersRepository.create(deliverer);
 
     const result = await sut.execute({
       adminId: admin.id.toString(),
-      name: faker.person.fullName(),
-      cpf: faker.string.numeric({ length: 11 }),
-      password: faker.internet.password(),
+      delivererId: deliverer.id.toString(),
     });
 
     expect(result.isRight()).toBe(true);
-    expect(inMemoryDeliverersRepository.items[0].cpf).toEqual(
-      result.value?.deliverer.cpf,
-    );
+    expect(inMemoryDeliverersRepository.items.length).toEqual(0);
   });
 });

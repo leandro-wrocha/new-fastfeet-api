@@ -1,38 +1,40 @@
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository';
 import { InMemoryDeliverersRepository } from 'test/repositories/in-memory-deliverers-repository';
-import { CreateDelivererUseCase } from './create-deliverer';
+import { FetchDeliverersUseCase } from './fetch-deliverers';
 import { makeAdmin } from 'test/factories/make-admin';
-import { faker } from '@faker-js/faker';
+import { makeDeliverer } from 'test/factories/make-deliverer';
 
 let inMemoryAdminsRepository: InMemoryAdminsRepository;
 let inMemoryDeliverersRepository: InMemoryDeliverersRepository;
-let sut: CreateDelivererUseCase;
+let sut: FetchDeliverersUseCase;
 
-describe('Create Deliverer Use Case', () => {
-  beforeAll(() => {
+describe('Fetch Deliverers Use Case', () => {
+  beforeEach(() => {
     inMemoryAdminsRepository = new InMemoryAdminsRepository();
     inMemoryDeliverersRepository = new InMemoryDeliverersRepository();
-    sut = new CreateDelivererUseCase(
+    sut = new FetchDeliverersUseCase(
       inMemoryDeliverersRepository,
       inMemoryAdminsRepository,
     );
   });
 
-  it('should be able a create deliverer', async () => {
+  it('should be able fetch deliverers', async () => {
     const admin = makeAdmin({});
 
     await inMemoryAdminsRepository.create(admin);
 
+    for (let i = 1; i <= 22; i++) {
+      const deliverer = makeDeliverer({});
+
+      await inMemoryDeliverersRepository.create(deliverer);
+    }
+
     const result = await sut.execute({
       adminId: admin.id.toString(),
-      name: faker.person.fullName(),
-      cpf: faker.string.numeric({ length: 11 }),
-      password: faker.internet.password(),
+      page: 2,
     });
 
     expect(result.isRight()).toBe(true);
-    expect(inMemoryDeliverersRepository.items[0].cpf).toEqual(
-      result.value?.deliverer.cpf,
-    );
+    expect(result.value?.deliverers.length).toEqual(2);
   });
 });

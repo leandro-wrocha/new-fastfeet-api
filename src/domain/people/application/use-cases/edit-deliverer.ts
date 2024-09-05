@@ -44,7 +44,7 @@ export class EditDelivererUseCase {
 
     deliverer.name = name ?? deliverer.name;
     deliverer.cpf = cpf ?? deliverer.cpf;
-    deliverer.password = password ?? deliverer.cpf;
+    deliverer.password = password ?? deliverer.password;
 
     this.deliverersRepository.save(deliverer);
 

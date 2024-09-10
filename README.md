@@ -12,10 +12,10 @@
 <h3>regras da aplicação</h3>
 
 <ul>
-  <li>a aplicação deve ter dois tipos de usuário, entregador e/ou admin - <b>não realizado</b>.</li>
+  <li>a aplicação deve ter dois tipos de usuário, entregador e/ou admin - <b>realizado</b>.</li>
   <li>deve ser possível realizar login com cpf e senha - <b>não realizado</b>.</li>
   <li>
-    deve ser possível realizar o crud dos entregadores - <b>não realizado</b>.
+    deve ser possível realizar o crud dos entregadores - <b>realizado</b>.
     <br/>
     <a href="#rn">rn</a>: somente usuário do tipo <b>admin</b> pode realizar operações de crud dos entregadores.
   </li>

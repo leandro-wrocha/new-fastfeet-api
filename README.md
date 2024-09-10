@@ -1,5 +1,14 @@
 <h1>fastfeet-api</h1>
 
+<h3>Descrição</h3>
+
+<p>
+  A primeira vez trabalhando nesta demanda, acabei não dando a atenção necessária na construção da aplicação,
+  e o entendimento de cada design pattern utilizado neste projeto. Então estou meio que retrabalhando do zero
+  a aplicação, porém deixando o outro projeto aqui no github para guardar registros de erros e tentar evitar 
+  novamente possiveis confusões no entendimento da demanda.
+</p>
+
 <h3>regras da aplicação</h3>
 
 <ul>
